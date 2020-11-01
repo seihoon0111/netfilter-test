@@ -83,7 +83,7 @@ static u_int32_t print_pkt (struct nfq_data *tb)
 		data=&data[(data[12]&0xf0)>>2];//tcp header length move
 		if(memcmp(get,data,3)==0)//get http check
 			{
-				while(memcmp(da,data+i,2)!=0){//host length check
+				while(memcmp(da,data+i,2)!=0){//get length check
 					i++;
 				}
 				i=i+2;//i=get length
