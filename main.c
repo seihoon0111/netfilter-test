@@ -71,6 +71,7 @@ static u_int32_t print_pkt (struct nfq_data *tb)
 		const char *da="\r\n";
 		const char *gilgil = "Host: test.gilgil.net\r\n";
 		int i=0;
+		int j=0;
 		printf("\nwarning : %d\n",warning);
 		warning=0;
 
@@ -82,12 +83,16 @@ static u_int32_t print_pkt (struct nfq_data *tb)
 		data=&data[(data[12]&0xf0)>>2];//tcp header length move
 		if(memcmp(get,data,3)==0)//get http check
 			{
-				data=&data[16];
 				while(memcmp(da,data+i,2)!=0){//host length check
 					i++;
 				}
-				i=i+2;//i=host length
-				if(memcmp(host,data,i)==0){//if host=gilgil warning=1;
+				i=i+2;//i=get length
+				data=&data[i];
+				while(memcmp(da,data+j,2)!=0){//host length check
+					j++;
+				}
+				j=j+2;//j=host length
+				if(memcmp(host,data,j)==0){//if host=gilgil warning=1;
 					warning=1;
 				}
 			}
